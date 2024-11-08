@@ -5,15 +5,20 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
+
+
+
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
+  DifferentialDrive m_drivetrain;
   public DriveSubsystem() {
     /** Creates a new DriveSubsystem. */
     CANSparkMax leftFront = new CANSparkMax(DriveConstants.kLeftFrontCANID, MotorType.kBrushless);
@@ -27,6 +32,8 @@ public class DriveSubsystem extends SubsystemBase {
       motor.enableSoftLimit(CANSparkBase.SoftLimitDirection.kForward, false);
       motor.enableSoftLimit(CANSparkBase.SoftLimitDirection.kReverse, false);
     }
+    m_drivetrain = new DifferentialDrive(leftFront, rightFront);
+
 leftBack.follow(leftFront);
 rightBack.follow(rightFront);
 leftFront.setInverted(false);
@@ -63,6 +70,11 @@ rightBack.setInverted(true);
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+/*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
+   * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
+  public void arcadeDrive(double speed, double rotation) {
+    m_drivetrain.arcadeDrive(speed, rotation);
   }
 
   @Override
