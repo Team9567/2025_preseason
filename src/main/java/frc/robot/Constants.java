@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -22,6 +23,8 @@ public final class Constants {
     public static final int kRightFrontCanId = 0;
     public static final int kLeftRearCanId = 0;
     public static final int kRightRearCanId = 0;
+
+    public static final Port kGyroPort = edu.wpi.first.wpilibj.I2C.Port.kMXP;
     
     public static final boolean kIsLeftFrontInverted = true;
     public static final boolean kIsRightFrontInverted = true;

@@ -4,17 +4,21 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ChassisConstants;
 
 import com.revrobotics.CANSparkMax;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class ChassisSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
+  DifferentialDrive m_drivetrain;
   public ChassisSubsystem() {
     CANSparkMax leftFront = new CANSparkMax(ChassisConstants.kLeftFrontCanId, MotorType.kBrushless);
     CANSparkMax rightFront = new CANSparkMax(ChassisConstants.kRightFrontCanId, MotorType.kBrushless);
@@ -27,7 +31,7 @@ public class ChassisSubsystem extends SubsystemBase {
         motor.setSmartCurrentLimit(60);
         motor.setClosedLoopRampRate(0);
         motor.enableSoftLimit(SoftLimitDirection.kForward,false);
-        motor.enableSoftLimit(SoftLimitDirection.kReverse.false);
+        motor.enableSoftLimit(SoftLimitDirection.kReverse,false);
     }
 leftRear.follow(leftFront);
 rightRear.follow(rightFront);
@@ -35,7 +39,21 @@ rightRear.follow(rightFront);
     rightFront.setInverted(true);
     leftRear.setInverted(true);
     rightRear.setInverted(true);
-    
+    m_drivetrain = new DifferentialDrive(leftFront, rightFront);
+  }
+
+  private final AHRS m_gyro = new AHRS(ChassisConstants.kGyroPort);
+  /*
+   * Method to control the drivetrain using arcade drive. Arcade drive takes a
+   * speed in the X (forward/back) direction
+   * and a rotation about the Z (turning the robot about it's center) and uses
+   * these to control the drivetrain motors
+   */
+  public void arcadeDrive(double speed, double rotation) {
+    SmartDashboard.putNumber("drivetrain/speed", speed);
+     SmartDashboard.putNumber("drivetrain/turn", rotation);
+     SmartDashboard.putNumber("drivetrain/angle", m_gyro.getYaw());
+    m_drivetrain.arcadeDrive(speed, rotation);
   }
 
   /**
