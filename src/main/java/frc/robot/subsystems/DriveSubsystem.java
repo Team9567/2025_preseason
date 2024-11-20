@@ -36,10 +36,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 leftBack.follow(leftFront);
 rightBack.follow(rightFront);
-leftFront.setInverted(false);
-rightFront.setInverted(true);
-leftBack.setInverted(true);
-rightBack.setInverted(true);
+leftFront.setInverted(true);
+rightFront.setInverted(false);
+leftBack.setInverted(false);
+rightBack.setInverted(false);
   }
 
   /**
@@ -74,6 +74,11 @@ rightBack.setInverted(true);
 /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
   public void arcadeDrive(double speed, double rotation) {
+    double newSpeed = speed;
+    if (speed > 0.5)
+    {
+      newSpeed = 0.5;
+    }
     m_drivetrain.arcadeDrive(speed, rotation);
   }
 
