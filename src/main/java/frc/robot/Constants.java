@@ -17,10 +17,10 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   public static class DriveConstants{
-    public static final int kLeftFrontCANID = 1;
-    public static final int kLeftBackCANID = 2;
-    public static final int kRightFrontCANID = 3;
-    public static final int kRightBackCANID = 4;
+    public static final int kLeftFrontCANID = 16;
+    public static final int kLeftBackCANID = 15;
+    public static final int kRightFrontCANID = 18;
+    public static final int kRightBackCANID = 17;
     public static final int kSmartCurrentLimit = 60;
     public static final double kClosedLoopRampRate = 3.0;
   }
